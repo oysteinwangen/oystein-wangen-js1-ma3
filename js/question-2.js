@@ -1,13 +1,33 @@
 const url =
   "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating";
+const corsEnabledUrl = "https://noroffcors.herokuapp.com/" + url;
+
+const resultsContainer = document.querySelector(".results");
 
 async function getGames() {
-  const response = await fetch(url);
-  const data = await response.json();
-  const results = data.all;
+  try {
+    const response = await fetch(corsEnabledUrl);
+    const data = await response.json();
+    const games = data.results;
 
-  for (let i = 0; i < results.length; i++) {
-    console.log(results[i]);
+    resultsContainer.innerHTML = "";
+
+    for (let i = 0; i < games.length; i++) {
+      if (i === 8) {
+        break;
+      }
+
+      console.log(games[i].name);
+      resultsContainer.innerHTML += `<div class="result">
+      <h2>${games[i].name}</h2>
+      <h3>Rating: ${games[i].rating}</h3>
+      <p>Number of tags: ${games[i].tags.length}</p>
+      <div>`;
+    }
+  } catch {
+    console.log("error");
+    resultsContainer.innerHTML = `<h1>error</h1>`;
   }
 }
+
 getGames();
