@@ -4,11 +4,10 @@ const url =
 async function getGames() {
   const response = await fetch(url);
   const data = await response.json();
-  const games = data.all;
+  const results = data.all;
 
-  for (let i = 0; i < games.length; i++) {
-    console.log(games[i]);
+  for (let i = 0; i < results.length; i++) {
+    console.log(results[i]);
   }
 }
-
-console.log(getGames());
+getGames();
